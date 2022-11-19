@@ -1,0 +1,52 @@
+--------------вложенный запрос
+
+--select first_name, last_name, id from employees.employee where id in
+--(select employee_id from employees.title 
+--where title = 'Senior Engineer'
+--and from_date <= current_date and to_date >= current_date);
+
+
+--select first_name, last_name, id from employees.employee where id in
+--(select employee_id from 
+--(select employee_id, count(*) as c 
+--from employees.department_employee
+--where from_date <= current_date and to_date >= current_date 
+--group by employee_id) as R where c>=2);
+
+
+--select first_name, id from employees.employee where id in
+--(select employee_id from employees.title
+--where title = 'Manager');
+
+
+--select first_name, id from employees.employee where id in
+--(select employee_id from employees.department_employee where department_id in
+--(select department_id from 
+--(select  department_id, count(*) as c 
+--from employees.department_employee 
+--where to_date = '9999-01-01'
+--group by department_id) 
+--as R where c>50000));
+
+
+--select first_name, last_name, id from employees.employee where id IN
+--(select employee_id from employees.salary 
+--where amount in 
+--(SELECT min(amount)
+--FROM employees.salary as R))
+
+
+--select first_name, last_name, id from employees.employee where id in
+--(select employee_id from employees.salary 
+--where amount > 90000)
+
+
+select dept_name from employees.department where id in
+(select department_id from
+(select department_id, count (*) as c
+from employees.department_manager
+where  from_date <= current_date
+and to_date >= current_date 
+group by department_id) as R where c > 1)
+
+
